@@ -7,32 +7,40 @@ backgroundImg.src = "assets/back.png";
 
 let pacman = new Pacman();
 let obstacles = [];
-let gameRunning = true; // Track if the game is running
+let gameRunning = false; // Game starts only after closing the start modal
 
-// Get modal elements
+// Get Start Game Modal Elements
+const startGameModal = document.getElementById("startGameModal");
+const startGameBtn = document.getElementById("startGameBtn");
+
+// Get Game Over Modal Elements
 const gameOverModal = document.getElementById("gameOverModal");
 const finalScoreText = document.getElementById("finalScore");
 const restartBtn = document.getElementById("restartBtn");
 const exitBtn = document.getElementById("exitBtn");
 
-// Ensure modal is **hidden** at the start
-gameOverModal.style.display = "none";
+// Ensure both modals are hidden initially
+startGameModal.style.display = "flex";  // Start game modal appears first
+gameOverModal.style.display = "none";   // Game over modal is hidden at start
 
+// Start Game Function (Triggered when user clicks "Start Game")
+startGameBtn.addEventListener("click", () => {
+    startGameModal.style.display = "none"; // Hide start modal
+    gameRunning = true; // Allow the game to start
+    gameLoop(); // Begin game loop
+});
+
+// Function to spawn obstacles
 function spawnObstacle() {
-    let type = Math.random() < 0.7 ? "bomb" : "fruit"; // 70% bomb, 30% fruit
-    obstacles.push(new Obstacle(type));
-}
-
-// Function to handle game over
-function gameOver() {
-    gameRunning = false; // Stop the game loop
-    finalScoreText.innerText = pacman.score; // Update score in modal
-    gameOverModal.style.display = "flex"; // Show modal
+    if (gameRunning) {
+        let type = Math.random() < 0.7 ? "bomb" : "fruit"; // 70% bomb, 30% fruit
+        obstacles.push(new Obstacle(type));
+    }
 }
 
 // Main Game Loop
 function gameLoop() {
-    if (!gameRunning) return; // Stop updating the game if gameRunning is false
+    if (!gameRunning) return; // Stop game updates if game is paused
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.drawImage(backgroundImg, 0, 0, canvas.width, canvas.height);
@@ -47,7 +55,7 @@ function gameLoop() {
         // Collision Detection
         if (pacman.collidesWith(obs)) {
             if (obs.type === "bomb") {
-                gameOver(); // Show game over dialog and freeze game
+                gameOver(); // Show game-over dialog and freeze game
                 return;
             } else {
                 pacman.score++;
@@ -64,9 +72,16 @@ function gameLoop() {
     requestAnimationFrame(gameLoop);
 }
 
+// Game Over Function (When Pacman hits a bomb)
+function gameOver() {
+    gameRunning = false; // Stop the game loop
+    finalScoreText.innerText = pacman.score; // Update score in modal
+    gameOverModal.style.display = "flex"; // Show game-over modal
+}
+
 // Restart Game Function
 restartBtn.addEventListener("click", () => {
-    gameOverModal.style.display = "none"; // Hide modal
+    gameOverModal.style.display = "none"; // Hide game-over modal
     resetGame(); // Restart game
 });
 
@@ -76,19 +91,13 @@ exitBtn.addEventListener("click", () => {
     alert("Thanks for playing!");
 });
 
-// Reset the game
+// Reset Game Function
 function resetGame() {
     pacman = new Pacman();
     obstacles = [];
-    gameRunning = true; // Resume the game loop
-    gameOverModal.style.display = "none"; // Hide modal
-    gameLoop(); // Restart the game loop
+    gameRunning = true;
+    gameLoop();
 }
 
-// Spawn obstacles every 300ms (only when the game is running)
-setInterval(() => {
-    if (gameRunning) spawnObstacle();
-}, 150);
-
-// Start the game
-gameLoop();
+// Spawn obstacles every 300ms (only when game is running)
+setInterval(spawnObstacle, 150);
