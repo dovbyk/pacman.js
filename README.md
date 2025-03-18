@@ -10,7 +10,9 @@ This project is a simple Pacman-inspired game. The player controls Pacman using 
 - High FPS (around 120 FPS) for smoother experience.
 - Restart functionality after the game ends.
 
-
+## 🚀 Play the Game  
+Click the link below to play:  
+🔗 [Play Pacman](https://dovbyk.github.io/pacman.js/)  
 
 
 
