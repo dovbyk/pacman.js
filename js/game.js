@@ -100,4 +100,4 @@ function resetGame() {
 }
 
 // Spawn obstacles every 300ms (only when game is running)
-setInterval(spawnObstacle, 150);
+setInterval(spawnObstacle, 200);
