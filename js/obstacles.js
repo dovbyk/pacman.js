@@ -3,7 +3,7 @@ class Obstacle {
         this.x = canvas.width;
         this.y = Math.random() * (canvas.height - 35);
         this.size = 35;
-        this.speed = -5; // Moves left
+        this.speed = -3; // Moves left
         this.type = type;
 
         this.image = new Image();
