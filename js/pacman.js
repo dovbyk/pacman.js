@@ -24,7 +24,7 @@ class Pacman {
     }
 
     changeDirection(event) {
-        switch (event.key.toLowerCase()) {
+        switch (event.key) {
             case "ArrowRight":
                 this.direction = "RIGHT";
                 break;
