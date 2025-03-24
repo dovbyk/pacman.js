@@ -3,7 +3,7 @@ class Pacman {
         this.x = 50;
         this.y = 200;
         this.size = 35;
-        this.speed = 7;
+        this.speed = 0;
         this.direction = "RIGHT"; // Default direction
         this.score = 0;
 
