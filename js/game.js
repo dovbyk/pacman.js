@@ -1,3 +1,10 @@
+/*
+What is the most complicated code you have written independently without
+AI or anyone else's assistance?
+*/
+
+//This is a survival game where ther is a character Pacman and we have to dodge every obstacles 
+
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
